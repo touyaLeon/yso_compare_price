@@ -39,7 +39,7 @@ def compare_price(file):
                 yso_iphone_df['linxas_name'].loc[ysoid] = linxas_df[0].loc[linxas_id]
                 yso_iphone_df['linxas_price'].loc[ysoid] = linxas_df[1].loc[linxas_id]
         if not pd.isna(smartphonemirai_id):
-            smartphonemirai_id = int(smartphonemirai_id)
+            smartphonemirai_id = smartphonemirai_id
             yso_df['smartphonemirai_id'].loc[ysoid] = smartphonemirai_id
             yso_df['smartphonemirai_name'].loc[ysoid] = smartphonemirai_df[0].loc[smartphonemirai_id]
             yso_df['smartphonemirai_price'].loc[ysoid] = smartphonemirai_df[1].loc[smartphonemirai_id]
