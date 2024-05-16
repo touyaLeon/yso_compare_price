@@ -32,10 +32,8 @@ def main(file):
         filestat = os.stat(rf'{file}/{filepath}')
         if time.time() - filestat.st_mtime < 15 * 24 * 60 * 60:  # 如果距离上次更改时间多于15天则更新
             continue
-        else:
-            print('Exceed 15 days, reset data') 
         if 'cookie' not in locals().keys():
-            cookie = input('Please input Smartphone Mirai Cookie: ')
+            cookie = input('Exceed 15 days, reset data. \nPlease input Smartphone Mirai Cookie: ')
         lst = re.findall('ct(.*?)_(.*?).html', filepath)
         i = lst[0][1]
         j = lst[0][0]
