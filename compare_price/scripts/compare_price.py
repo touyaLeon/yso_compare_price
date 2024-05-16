@@ -8,10 +8,10 @@ from tqdm import tqdm
 
 def compare_price(file):
     print('Reading Price Data')
-    id_df = pd.read_excel(rf'{file}\compare_price\data\all_id.xlsx', index_col=0)
-    linxas_df = pd.read_excel(rf'{file}\get_price\linxas\data\linxas_price.xlsx', index_col=0)
-    smartphonemirai_df = pd.read_excel(rf'{file}\get_price\smartphonemirai\data\smartphonemirai_price.xlsx', index_col=0)
-    yso_df = pd.read_excel(rf'{file}\compare_price\data\yso_price.xlsx', index_col='受注明細/製品/ID')
+    id_df = pd.read_excel(f'{file}/compare_price/data/all_id.xlsx', index_col=0)
+    linxas_df = pd.read_excel(f'{file}/get_price/linxas/data/linxas_price.xlsx', index_col=0)
+    smartphonemirai_df = pd.read_excel(f'{file}/get_price/smartphonemirai/data/smartphonemirai_price.xlsx', index_col=0)
+    yso_df = pd.read_excel(f'{file}/compare_price/data/yso_price.xlsx', index_col='受注明細/製品/ID')
     iphone_num = 155
     yso_iphone_df = yso_df.iloc[:iphone_num].copy(deep=True)
     yso_df['linxas_id'] = None

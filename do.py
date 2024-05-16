@@ -20,8 +20,8 @@ def main():
     getPrice(file)
     all_result, iphone_result = comparePrice(file)
     print('Saving results')
-    all_result.to_excel(rf'{file}\results\all_results.xlsx')
-    iphone_result.to_excel(rf'{file}\results\iphone_results.xlsx')
+    all_result.to_excel(f'{file}/results/all_results.xlsx')
+    iphone_result.to_excel(f'{file}/results/iphone_results.xlsx')
 
 
 if __name__ == '__main__':

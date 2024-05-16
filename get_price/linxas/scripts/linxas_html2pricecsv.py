@@ -15,8 +15,8 @@ def read_file(filename):
 
 def main(file):
     dic = {}
-    for nm in tqdm(os.listdir(fr'{file}\get_price\linxas\html_from_linxas'), desc='Reading Linxas price'):
-        s = read_file(fr"{file}\get_price\linxas\html_from_linxas\{nm}")
+    for nm in tqdm(os.listdir(fr'{file}/get_price/linxas/html_from_linxas'), desc='Reading Linxas price'):
+        s = read_file(fr"{file}/get_price/linxas/html_from_linxas/{nm}")
         r1 = re.findall('<h2 class="__name">\n            (.*?)\n            \n        </h2>', s)
         r2 = re.findall('<span class="c-tax-sub-price __tax-sub-price __is-out-in">\\(税込(.*?)円\\)</span>', s)
         r3 = re.findall('''<dl class="__jan">
@@ -27,4 +27,4 @@ def main(file):
             dic[id] = (name, price)
     price_series = pd.DataFrame(dic).T
     price_series.columns
-    price_series.to_excel(fr'{file}\get_price\linxas\data\linxas_price.xlsx')
+    price_series.to_excel(fr'{file}/get_price/linxas/data/linxas_price.xlsx')
