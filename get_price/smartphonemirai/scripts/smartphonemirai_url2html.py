@@ -29,7 +29,7 @@ def save_to_file(filename, content):
 def main(file):
     file = rf'{file}/get_price/smartphonemirai/html_from_smartphonemirai'
     for filepath in tqdm(os.listdir(file), desc='Crawling Smartphone Mirai'):
-        filestat = os.stat(rf'{file}\{filepath}')
+        filestat = os.stat(rf'{file}/{filepath}')
         lst = re.findall('ct(.*?)_(.*?).html', filepath)
         i = lst[0][1]
         j = lst[0][0]
@@ -39,4 +39,4 @@ def main(file):
         result = download_content(_url)
         if 'このカテゴリーには商品がありません' in result:
             break
-        save_to_file(rf'{file}\{filepath}', result)
+        save_to_file(rf'{file}/{filepath}', result)
