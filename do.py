@@ -22,7 +22,7 @@ def main():
     file = '.'
     if input('Update price data? [y/n]: ') == 'y':
         getHtml(file)
-        getPrice(file)
+    getPrice(file)
     all_result, iphone_result = comparePrice(file)
     print('Saving results')
     all_result.to_excel(f'{file}/results/all_results.xlsx')
@@ -30,4 +30,4 @@ def main():
 
 
 if __name__ == '__main__':
-    main() 
+    main()

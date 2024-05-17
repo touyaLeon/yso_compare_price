@@ -28,12 +28,12 @@ def save_to_file(filename, content):
 def main(file):
     for i in tqdm(range(3, 200), desc='Crawling Linxas'):
         filepath = f"{file}/get_price/linxas/html_from_linxas/id{i}.html"
-        if f'id{i}.html' in os.listdir(f'{file}/get_price/linxas/html_from_linxas'):
-            filestat = os.stat(filepath)
-            if time.time() - filestat.st_mtime < 15 * 24 * 60 * 60:  # 如果距离上次更改时间多于15天则更新
-                continue
-        else:
-            continue
+        # if f'id{i}.html' in os.listdir(f'{file}/get_price/linxas/html_from_linxas'):
+        #     filestat = os.stat(filepath)
+        #     if time.time() - filestat.st_mtime < 15 * 24 * 60 * 60:  # 如果距离上次更改时间多于15天则更新
+        #         continue
+        # else:
+        #     continue
         _url = f"https://linxas.online/product.php?id={i}"
         result = download_content(_url)
         if 'ページが見つかりません' in result:

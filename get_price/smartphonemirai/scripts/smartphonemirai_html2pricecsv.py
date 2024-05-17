@@ -24,7 +24,21 @@ def main(file):
 
                     <div class="item-detail-icon">
 
-                                            <p class="item-detail-soldout">(.*?)</p>
+                                        </div>
+
+                    <p class="item-category-name">(.*?)</p>
+
+                    (.*?)
+
+                </div>''', s)
+        if len(r1) == 0:
+            r1 = re.findall('''<div class="item-title">
+
+                    
+
+                    <div class="item-detail-icon">
+
+                                            <p class="item-detail-soldout">SOLD OUT</p>
 
                                         </div>
 
@@ -33,16 +47,18 @@ def main(file):
                     (.*?)
 
                 </div>''', s)
-        r2 = re.findall('<p class="item-price">￥<span data-id="makeshop-item-price:1">(.*?)</span><span class="item-tax">（税込）</span></p>', s)
+        r2 = re.findall('<p class="item-price">￥<span data-id="makeshop-item-price:1">(.*?)</span><span class="item-tax">（税込）</span></p>', s)[0]
         r3 = re.findall('''<dl>
 
                             <dt>独自商品コード</dt>
 
                             <dd>：(.*?)</dd>
 
-                        </dl>''', s)
-        for name, price, id in zip(r1, r2, r3):
-            name = name[2]
+                        </dl>''', s)[0]
+        if len(r1) != 0 and len(r2) != 0 and len(r3) != 0:
+            name = r1[0][1]
+            price = r2
+            id = r3
             dic[id] = (name, price)
     price_series = pd.DataFrame(dic).T
     price_series.to_excel(rf'{file}/data/smartphonemirai_price.xlsx')
