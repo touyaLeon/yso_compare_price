@@ -57,7 +57,7 @@ def compute_price_ratio(df, yso_price_name='受注明細/税込価格'):
 def compute_reference_price(df, yso_price_name='受注明細/税込価格'):
     df['参考价'] = list(map(get_reference_price, df['smartphonemirai_price￥'], df['linxas_price￥'], df['受注明細/製品/原価']))
     df['与卖价差额'] = pd.to_numeric(df['参考价']) - df[yso_price_name]
-    df['与卖价差额百分比'] = list(map(lambda x, y: '{:.2f}%'.format(x/y), df['与卖价差额'], df[yso_price_name]))
+    df['与卖价差额百分比'] = list(map(lambda x, y: '{:.2f}%'.format(x/y*100), df['与卖价差额'], df[yso_price_name]))
     return df
 
 
