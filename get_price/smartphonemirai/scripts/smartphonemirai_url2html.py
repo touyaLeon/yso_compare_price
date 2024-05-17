@@ -28,17 +28,19 @@ def save_to_file(filename, content):
 
 def main(file):
     file = rf'{file}/get_price/smartphonemirai/html_from_smartphonemirai'
-    for filepath in tqdm(os.listdir(file), desc='Crawling Smartphone Mirai'):
-        filestat = os.stat(rf'{file}/{filepath}')
-        if time.time() - filestat.st_mtime < 15 * 24 * 60 * 60:  # 如果距离上次更改时间多于15天则更新
-            continue
+    for num in tqdm(range(3500), desc='Crawling Smartphone Mirai'):
+        str_num = str(num)
+        s = '0' * (12-len(str_num)) + str_num
+        # if f'{s}.html' in os.listdir(f'{file}'):
+        #     filestat = os.stat(rf'{file}/{s}.html')
+        #     if time.time() - filestat.st_mtime < 15 * 24 * 60 * 60:  # 如果距离上次更改时间多于15天则更新
+        #         continue
+        # if 'cookie' not in locals().keys():
+        #     cookie = input('Exceed 15 days, reset data. \nPlease input Smartphone Mirai Cookie: ')
         if 'cookie' not in locals().keys():
-            cookie = input('Exceed 15 days, reset data. \nPlease input Smartphone Mirai Cookie: ')
-        lst = re.findall('ct(.*?)_(.*?).html', filepath)
-        i = lst[0][1]
-        j = lst[0][0]
-        _url = f"https://www.smartmirai.net/view/category/ct{j}?page={i}"
+            cookie = input('Please input Smartphone Mirai Cookie: ')
+        _url = f"https://www.smartmirai.net/view/item/{s}"
         result = download_content(_url, cookie)
-        if 'このカテゴリーには商品がありません' in result:
-            break
-        save_to_file(rf'{file}/{filepath}', result)
+        if '申し訳ございません' in result:
+            continue
+        save_to_file(rf'{file}/{s}.html', result)
