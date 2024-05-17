@@ -12,8 +12,8 @@ def create_df_cols(df):
     df['百分比2'] = pd.NA
     df['贵或便宜或居中'] = pd.NA
     df['参考价'] = pd.NA
-    df['与原价差额'] = pd.NA
-    df['与原价差额百分比'] = pd.NA
+    df['与卖价差额'] = pd.NA
+    df['与卖价差额百分比'] = pd.NA
     df['linxas_id'] = None
     df['linxas_name'] = None
     df['linxas_price￥'] = pd.NA
@@ -46,18 +46,18 @@ def get_reference_price(x, y, z):
 def compute_price_ratio(df, yso_price_name='受注明細/税込価格'):
     df['smartphonemirai_price￥'] = pd.to_numeric(df['smartphonemirai_price￥'])
     df['linxas_price￥'] = pd.to_numeric(df['linxas_price￥'])
-    df['差额1'] =  df[yso_price_name] - df['linxas_price￥']
-    df['百分比1'] = list(map(lambda x, y: '{:.2f}%'.format(x/y) if not pd.isna(x) else pd.NA, df['差额1'], df[yso_price_name]))
+    df['差额1'] = df[yso_price_name] - df['linxas_price￥']
+    df['百分比1'] = list(map(lambda x, y: '{:.2f}%'.format(x/y*100) if not pd.isna(x) else pd.NA, df['差额1'], df[yso_price_name]))
     df['差额2'] = df[yso_price_name] - df['smartphonemirai_price￥']
-    df['百分比2'] = list(map(lambda x, y: '{:.2f}%'.format(x/y) if not pd.isna(x) else pd.NA, df['差额2'], df[yso_price_name]))
+    df['百分比2'] = list(map(lambda x, y: '{:.2f}%'.format(x/y*100) if not pd.isna(x) else pd.NA, df['差额2'], df[yso_price_name]))
     df['贵或便宜或居中'] = list(map(compare_price_func, df[yso_price_name], df['smartphonemirai_price￥'], df['linxas_price￥']))
     return df
 
 
 def compute_reference_price(df, yso_price_name='受注明細/税込価格'):
     df['参考价'] = list(map(get_reference_price, df['smartphonemirai_price￥'], df['linxas_price￥'], df['受注明細/製品/原価']))
-    df['与原价差额'] = pd.to_numeric(df['参考价']) - df[yso_price_name]
-    df['与原价差额百分比'] = list(map(lambda x, y: '{:.2f}%'.format(x/y), df['与原价差额'], df[yso_price_name]))
+    df['与卖价差额'] = pd.to_numeric(df['参考价']) - df[yso_price_name]
+    df['与卖价差额百分比'] = list(map(lambda x, y: '{:.2f}%'.format(x/y), df['与卖价差额'], df[yso_price_name]))
     return df
 
 
