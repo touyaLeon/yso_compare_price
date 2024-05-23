@@ -77,5 +77,7 @@ def set_price(file):
             df['setted_price'].loc[id] = setted_price
     df_categ_s = ','.join(df_categ_lst)
     ntm = datetime.now()
-    tm = str(datetime.date(ntm)) + ' ' + str(ntm.hour) + ':' + str(ntm.minute) + ':' + str(ntm.second)
-    df.to_excel(f"{file}/compare_price/data/{tm}-setted_price({df_categ_s}).xlsx")
+    tm = str(datetime.date(ntm)) + '-' + str(ntm.hour) + '-' + str(ntm.minute)
+    fname = f'{tm} setted_price({df_categ_s}).xlsx'
+    df.to_excel(f"{file}/compare_price/data/{fname}")
+    print(f'新设置的价格表{fname}已保存至{file}/compare_price/data')
