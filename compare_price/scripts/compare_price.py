@@ -1,4 +1,3 @@
-from posixpath import split
 import pandas as pd
 from tqdm import tqdm
 from datetime import datetime
@@ -68,23 +67,33 @@ def compare_price(file, filename):
                 linxas_id = int(linxas_id)
                 linxas_name = linxas_df[0].loc[linxas_id]
                 linxas_price = ''.join(linxas_df[1].loc[linxas_id].split(','))
-                yso_df['linxas_id'].loc[ysoid] = str(linxas_id)
-                yso_df['linxas_name'].loc[ysoid] = linxas_name
-                yso_df['linxas_price￥'].loc[ysoid] = linxas_price
+                if ysoid in yso_df.index:
+                    yso_df['linxas_id'].loc[ysoid] = str(linxas_id)
+                    yso_df['linxas_name'].loc[ysoid] = linxas_name
+                    yso_df['linxas_price￥'].loc[ysoid] = linxas_price
         if not pd.isna(smartphonemirai_id):
             if smartphonemirai_id in smartphonemirai_df.index:
                 smartphonemirai_name = smartphonemirai_df[0].loc[smartphonemirai_id]
                 smartphonemirai_price = ''.join(smartphonemirai_df[1].loc[smartphonemirai_id].split(','))
-                yso_df['smartphonemirai_id'].loc[ysoid] = smartphonemirai_id
-                yso_df['smartphonemirai_name'].loc[ysoid] = smartphonemirai_name
-                yso_df['smartphonemirai_price￥'].loc[ysoid] = smartphonemirai_price
+                if ysoid in yso_df.index:
+                    yso_df['smartphonemirai_id'].loc[ysoid] = smartphonemirai_id
+                    yso_df['smartphonemirai_name'].loc[ysoid] = smartphonemirai_name
+                    yso_df['smartphonemirai_price￥'].loc[ysoid] = smartphonemirai_price
     if 'setted_price' in yso_df.columns:
         yso_price_name = 'setted_price'
     else:
         yso_price_name = '受注明細/税込価格'
     compared_df = compute_price_ratio(yso_df, yso_price_name=yso_price_name)
-    tmp = filename.split('.')[0]
-    result_name = f'{tmp} result.xlsx'
+    ntm = datetime.now()
+    tm = str(datetime.date(ntm)) + '-' + str(ntm.hour) + '-' + str(ntm.minute)
+    nm_lst = filename.split(' ')
+    if len(nm_lst) > 1:
+        nm = nm_lst[1]
+    else:
+        nm = nm_lst[0]
+    if nm[-4:] == 'xlsx':
+        nm = nm[:-5]
+    result_name = f'{tm} {nm} result.xlsx'
     compared_df.to_excel(f'{file}/results/{result_name}')
     print(f'对比完成，结果已保存到{result_name}')
     return compared_df.dropna(axis='index', subset=[yso_price_name])

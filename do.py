@@ -1,7 +1,3 @@
-import time
-from bin.scripts.run import run
-
-
 def main():
     file = '.'
     while True:
@@ -10,4 +6,7 @@ def main():
 
 
 if __name__ == '__main__':
+    print('正在加载……')
+    import time
+    from bin.scripts.run import run
     main()

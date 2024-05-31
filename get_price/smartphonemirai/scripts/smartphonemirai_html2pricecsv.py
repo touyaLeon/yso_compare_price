@@ -60,5 +60,11 @@ def main(file):
             price = r2
             id = r3
             dic[id] = (name, price)
-    price_series = pd.DataFrame(dic).T
-    price_series.to_excel(rf'{file}/data/smartphonemirai_price.xlsx')
+    price_df = pd.DataFrame(dic).T
+    if f'smartphonemirai_price.xlsx' in os.listdir(f'{file}/data/'):
+        pre_price_df = pd.read_excel(f'{file}/data/smartphonemirai_price.xlsx', index_col=0)
+        price_df['pre_price'] = pd.NA
+        for id in pre_price_df.index:
+            if id in price_df.index:
+                price_df['pre_price'].loc[id] = pre_price_df[1].loc[id]
+    price_df.to_excel(f'{file}/data/smartphonemirai_price.xlsx')
