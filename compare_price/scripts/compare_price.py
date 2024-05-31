@@ -79,8 +79,8 @@ def compare_price(file, filename):
                     yso_df['smartphonemirai_id'].loc[ysoid] = smartphonemirai_id
                     yso_df['smartphonemirai_name'].loc[ysoid] = smartphonemirai_name
                     yso_df['smartphonemirai_price￥'].loc[ysoid] = smartphonemirai_price
-    if 'setted_price' in yso_df.columns:
-        yso_price_name = 'setted_price'
+    if 'faxed_price' in yso_df.columns:
+        yso_price_name = 'faxed_price'
     else:
         yso_price_name = '受注明細/税込価格'
     compared_df = compute_price_ratio(yso_df, yso_price_name=yso_price_name)
